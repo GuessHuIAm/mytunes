@@ -4,17 +4,10 @@
 #include <time.h>
 #include "song_list.h"
 
-struct song
-{
-	char name[100];
-	char artist[100];
-	struct song *next;
-};
-
 //print song
 void print_song(struct song *s)
 {
-	printf("'%s'\tby%s\n", s->name, s->artist);
+	printf("'%s' by %s\n", s->name, s->artist);
 }
 
 //new song
@@ -99,15 +92,15 @@ struct song *insert(struct song *old, char *name1, char *artist1)
 {
 	struct song *nn = malloc(sizeof(struct song));
 	struct song *p = old;
-	nn->name = name1;
-	nn->artist = artist1;
+	strcpy(nn->name, name1);
+	strcpy(nn->artist, artist1);
 
 	if (old == NULL)
 	{
 		return nn;
 	}
 
-	(while p != NULL)
+	while (p != NULL)
 	{
 		if (strcmp(p->artist, artist1) == 0)
 		{
@@ -130,48 +123,23 @@ struct song *insert(struct song *old, char *name1, char *artist1)
 	}
 	p = old;
 	//assumes its sorted by artist at this point
-	(while p != NULL)
-	{
-		if (strcmp(p->name, name1) == 0)
-		{
-			nn = p->next;
-			p->next = nn;
-			break;
-		}
-		if (p->next == NULL)
-		{
-			p->next = nn;
-			break;
-		}
-		if (strcmp(p->name, name1) < 0 && strcmp(p->next->name, name1) > 0)
-		{
-			nn = p->next;
-			p->next = nn;
-			break;
-		}
-		p = p->next;
-	}
-
-	return old;
 }
-
 //insert nodes in order alphabetical by Artist then by Song, returns beginning of the list
 
-struct song *search(struct song *x, char *artist1, char *name1)
+struct song *search(struct song *x, char *name1, char *artist1)
 {
-	struct song *returnval = NULL;
 	while (x != NULL)
 	{
 		if (strcmp(x->artist, artist1) == 0 && strcmp(x->name, name1) == 0)
 		{
-			returnval = x;
-			return returnval;
+			return x;
 		}
 		else
 		{
 			x = x->next; /* code */
 		}
 	}
+	return NULL;
 }
 //find and return a pointer to a node based on artist and song name
 
@@ -182,8 +150,7 @@ struct song *first_search(struct song *x, char *artist1)
 	{
 		if (strcmp(x->artist, artist1) == 0)
 		{
-			returnval = x;
-			return returnval;
+			return x;
 		}
 	}
 }
@@ -194,26 +161,30 @@ struct song *random_element(struct song *x)
 	int len = 0;
 	srand(time(NULL));
 	struct song *j = x;
-	while (j != NULL)
+	while (x != NULL)
 	{
 		len += 1;
-		j = j->next;
+		x = x->next;
 	}
 	//gets length of list by going through all nodes
 
+	x = j;
+
 	int random_i = (rand() % 10);
-	while (random_i > len)
+	while (random_i > len || random_i == 0)
 	{
 		random_i = (rand() % 10);
 	}
 	//rng
+	random_i -= 1;
 
 	int k;
-	for (k = 0; k < len; k++)
+	for (k = 0; k < random_i; k++)
 	{
 		x = x->next;
 	}
 	//goes to random node
+
 	return x;
 }
 

@@ -10,7 +10,6 @@ struct song
 
 void print_song(struct song *s);
 struct song *new_song(char *n, char *a, struct song *next);
-void new_song(struct song *s, char *n, char *a, struct song *next);
 void print_list(struct song *s);
 struct song *insert_front(struct song *s, char *n, char *a);
 struct song *free_list(struct song *s);
