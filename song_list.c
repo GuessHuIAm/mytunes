@@ -94,6 +94,7 @@ struct song *insert(struct song *old, char *name1, char *artist1)
 	struct song *p = old;
 	strcpy(nn->name, name1);
 	strcpy(nn->artist, artist1);
+	nn->next = NULL;
 
 	if (old == NULL)
 	{
@@ -102,28 +103,66 @@ struct song *insert(struct song *old, char *name1, char *artist1)
 
 	while (p != NULL)
 	{
+
 		if (strcmp(p->artist, artist1) == 0)
 		{
-			nn = p->next;
-			p->next = nn;
-			break;
+
+			if (p->next == NULL && strcmp(p->name, name1) < 0)
+			{
+				printf("b\n");
+				p->next = nn;
+				p = old;
+				return p;
+			}
+
+			if (strcmp(p->name, name1) > 0)
+			{
+				printf("c\n");
+				nn->next = p->next;
+				p->next = nn;
+				strcpy(nn->name, p->name);
+				strcpy(p->name, name1);
+				p = old;
+				return p;
+			}
+			if (strcmp(p->name, name1) < 0 && strcmp(p->next->artist, artist1) == 0 && strcmp(p->next->name, name1) < 0)
+			{
+				p = p->next;
+			}
+			if (strcmp(p->name, name1) < 0)
+			{
+				printf("d\n");
+				nn->next = p->next;
+				p->next = nn;
+				p = old;
+				return p;
+			}
 		}
-		if (p->next == NULL)
+		if (strcmp(p->artist, artist1) > 0)
+		{
+			nn->next = p;
+			p = nn;
+			return p;
+		}
+
+		if (p->next == NULL && strcmp(p->artist, artist1) < 0)
 		{
 			p->next = nn;
-			break;
+			p = old;
+			return p;
 		}
-		if (strcmp(p->artist, artist1) < 0 && strcmp(p->next->artist, artist1) > 0)
+		if (strcmp(p->artist, artist1) < 0 && strcmp(p->next->artist, artist1) > 0 && p->next != NULL)
 		{
-			nn = p->next;
+			nn->next = p->next;
 			p->next = nn;
-			break;
+			p = old;
+			return p;
 		}
 		p = p->next;
 	}
-	p = old;
-	//assumes its sorted by artist at this point
 }
+//assumes its sorted by artist at this point
+
 //insert nodes in order alphabetical by Artist then by Song, returns beginning of the list
 
 struct song *search(struct song *x, char *name1, char *artist1)
