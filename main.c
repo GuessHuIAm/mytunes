@@ -62,7 +62,7 @@ int main()
     list1 = insert_order(list1, "Hung Up", "Madonna");
     list1 = insert_order(list1, "Another Brick in the Wall", "Pink Floyd");
     list1 = insert_order(list1, "Vogue", "Madonna");
-    //list1 = insert_front(list1, "You Belong With Me", "Taylor Swift");
+    list1 = insert_order(list1, "You Belong With Me", "Taylor Swift");
     list1 = insert_order(list1, "Work", "Rihanna");
     list1 = insert_order(list1, "Lose Yourself", "Eminem");
     list1 = insert_order(list1, "Stay", "Zedd");

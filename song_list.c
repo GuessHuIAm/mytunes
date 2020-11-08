@@ -133,6 +133,8 @@ struct song *insert_order(struct song *old, char *name1, char *artist1)
 			}
 			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) < 0)
 			{
+				nn->next = p->next;
+				//fixed
 				p->next = nn;
 				p = old;
 				return p;
