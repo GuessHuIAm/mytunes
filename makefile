@@ -9,3 +9,7 @@ song_list.o: song_list.c song_list.h
 
 run:
 	./test
+
+clear:
+	rm *.o
+	rm test

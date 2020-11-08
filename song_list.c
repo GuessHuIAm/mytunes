@@ -7,7 +7,7 @@
 //print song
 void print_song(struct song *s)
 {
-	printf("'%s' by %s\n", s->name, s->artist);
+	printf("%s -- \"%s\"\n", s->artist, s->name);
 }
 
 //new song
@@ -51,17 +51,18 @@ struct song *insert_front(struct song *list, char *n, char *a)
 //free a song list
 struct song *free_list(struct song *s)
 {
+	struct song *temp;
 	struct song *first = s;
-	struct song *next;
-
+	printf("Freeing... ");
 	while (s != NULL)
 	{
-		next = s->next;
-		printf("Free %s\n", s->name);
-		free(s);
-		s = next;
+		temp = s;
+		temp->next = NULL;
+		free(temp);
+		s = s->next;
 	}
-	return first;
+	printf("Done!\n");
+	return NULL;
 }
 
 //remove a song from a list
@@ -88,25 +89,19 @@ struct song *remove_song(struct song *front, char *name)
 	return first;
 }
 
-struct song *insert(struct song *old, char *name1, char *artist1)
+//insert a song in order, returns the beginning of the list
+struct song *insert_order(struct song *old, char *name1, char *artist1)
 {
-	struct song *nn = malloc(sizeof(struct song));
+	struct song *nn = new_song(name1, artist1, NULL);
 	struct song *p = old;
-	strcpy(nn->name, name1);
-	strcpy(nn->artist, artist1);
-	nn->next = NULL;
 
-	if (old == NULL)
-	{
+	if (old == NULL){
 		return nn;
 	}
 
-	while (p != NULL)
-	{
-
+	while (p != NULL){
 		if (strcmp(p->artist, artist1) == 0)
 		{
-
 			if (p->next == NULL && strcmp(p->name, name1) < 0)
 			{
 				printf("b\n");
@@ -161,28 +156,22 @@ struct song *insert(struct song *old, char *name1, char *artist1)
 		p = p->next;
 	}
 }
-//assumes its sorted by artist at this point
 
-//insert nodes in order alphabetical by Artist then by Song, returns beginning of the list
-
-struct song *search(struct song *x, char *name1, char *artist1)
-{
-	while (x != NULL)
-	{
-		if (strcmp(x->artist, artist1) == 0 && strcmp(x->name, name1) == 0)
-		{
+//return a pointer based on artist and song name
+struct song *song_search(struct song *x, char *name1, char *artist1){
+	while (x != NULL){
+		if (strcmp(x->artist, artist1) == 0 && strcmp(x->name, name1) == 0){
 			return x;
 		}
-		else
-		{
+		else{
 			x = x->next; /* code */
 		}
 	}
 	return NULL;
 }
-//find and return a pointer to a node based on artist and song name
 
-struct song *first_search(struct song *x, char *artist1)
+//return the first pointer to a node based on artist
+struct song *artist_search(struct song *x, char *artist1)
 {
 	struct song *returnval = NULL;
 	while (x != NULL)
@@ -191,12 +180,15 @@ struct song *first_search(struct song *x, char *artist1)
 		{
 			return x;
 		}
+		else{
+			x = x->next;
+		}
 	}
+	return NULL;
 }
-//find and return a pointer to the first song of an artist based on artist name
 
-struct song *random_element(struct song *x)
-{
+//return the pointer to a random song in the list
+struct song *random_song(struct song *x){
 	int len = 0;
 	srand(time(NULL));
 	struct song *j = x;
@@ -226,5 +218,3 @@ struct song *random_element(struct song *x)
 
 	return x;
 }
-
-//Return a pointer to random element in the list.
