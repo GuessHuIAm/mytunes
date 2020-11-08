@@ -95,51 +95,90 @@ struct song *insert_order(struct song *old, char *name1, char *artist1)
 	struct song *nn = new_song(name1, artist1, NULL);
 	struct song *p = old;
 
-	if (old == NULL){
+	if (old == NULL)
+	{
 		return nn;
 	}
 
-	while (p != NULL){
+	while (p != NULL)
+	{
 		if (strcmp(p->artist, artist1) == 0)
 		{
 			if (p->next == NULL && strcmp(p->name, name1) < 0)
 			{
-				printf("b\n");
 				p->next = nn;
 				p = old;
 				return p;
 			}
-
-			if (strcmp(p->name, name1) > 0)
+			if (p->next == NULL && strcmp(p->name, name1) > 0)
 			{
-				printf("c\n");
-				nn->next = p->next;
 				p->next = nn;
+				strcpy(nn->artist, p->artist);
 				strcpy(nn->name, p->name);
+				strcpy(p->artist, artist1);
 				strcpy(p->name, name1);
 				p = old;
 				return p;
 			}
-			if (strcmp(p->name, name1) < 0 && strcmp(p->next->artist, artist1) == 0 && strcmp(p->next->name, name1) < 0)
+			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) > 0)
 			{
-				p = p->next;
+				nn->next = p->next;
+				p->next = nn;
+				strcpy(nn->artist, p->artist);
+				strcpy(nn->name, p->name);
+				strcpy(p->artist, artist1);
+				strcpy(p->name, name1);
+				p = old;
+				return p;
 			}
-			if (strcmp(p->name, name1) < 0)
+			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) < 0)
 			{
-				printf("d\n");
+				p->next = nn;
+				p = old;
+				return p;
+			}
+			if (strcmp(p->name, name1) < 0 && strcmp(p->next->name, name1) > 0 && p->next != NULL)
+			{
 				nn->next = p->next;
 				p->next = nn;
 				p = old;
 				return p;
 			}
+			if (strcmp(p->name, name1) > 0)
+			{
+				nn->next = p->next;
+				p->next = nn;
+				strcpy(nn->artist, p->artist);
+				strcpy(nn->name, p->name);
+				strcpy(p->artist, artist1);
+				strcpy(p->name, name1);
+				p = old;
+				return p;
+			}
+			/*
+			if (strcmp(p->name, name1) < 0)
+			{
+				nn->next = p->next;
+				p->next = nn;
+				p = old;
+				return p;
+			}
+			*/
+
+			p = p->next;
+			//return old;
 		}
 		if (strcmp(p->artist, artist1) > 0)
 		{
-			nn->next = p;
-			p = nn;
+			nn->next = p->next;
+			p->next = nn;
+			strcpy(nn->artist, p->artist);
+			strcpy(nn->name, p->name);
+			strcpy(p->artist, artist1);
+			strcpy(p->name, name1);
+			p = old;
 			return p;
 		}
-
 		if (p->next == NULL && strcmp(p->artist, artist1) < 0)
 		{
 			p->next = nn;
@@ -153,17 +192,22 @@ struct song *insert_order(struct song *old, char *name1, char *artist1)
 			p = old;
 			return p;
 		}
+
 		p = p->next;
 	}
 }
 
 //return a pointer based on artist and song name
-struct song *song_search(struct song *x, char *name1, char *artist1){
-	while (x != NULL){
-		if (strcmp(x->artist, artist1) == 0 && strcmp(x->name, name1) == 0){
+struct song *song_search(struct song *x, char *name1, char *artist1)
+{
+	while (x != NULL)
+	{
+		if (strcmp(x->artist, artist1) == 0 && strcmp(x->name, name1) == 0)
+		{
 			return x;
 		}
-		else{
+		else
+		{
 			x = x->next; /* code */
 		}
 	}
@@ -180,7 +224,8 @@ struct song *artist_search(struct song *x, char *artist1)
 		{
 			return x;
 		}
-		else{
+		else
+		{
 			x = x->next;
 		}
 	}
@@ -188,9 +233,9 @@ struct song *artist_search(struct song *x, char *artist1)
 }
 
 //return the pointer to a random song in the list
-struct song *random_song(struct song *x){
+struct song *random_song(struct song *x)
+{
 	int len = 0;
-	srand(time(NULL));
 	struct song *j = x;
 	while (x != NULL)
 	{
@@ -201,13 +246,7 @@ struct song *random_song(struct song *x){
 
 	x = j;
 
-	int random_i = (rand() % 10);
-	while (random_i > len || random_i == 0)
-	{
-		random_i = (rand() % 10);
-	}
-	//rng
-	random_i -= 1;
+	int random_i = rand() % len;
 
 	int k;
 	for (k = 0; k < random_i; k++)

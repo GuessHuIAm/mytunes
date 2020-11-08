@@ -6,9 +6,11 @@
 
 int main()
 {
+    srand(time(NULL));
     //testing insert_front
     printf("****************************Testing insert_front!\n");
     struct song *list1 = NULL;
+
     list1 = insert_front(list1, "1989", "Taylor Swift");
     list1 = insert_front(list1, "Hey Jude", "The Beatles");
     list1 = insert_front(list1, "Burning Love", "Elvis Presley");
@@ -48,6 +50,7 @@ int main()
     printf("There's nothing!\n");
 
     //testing insert_order
+
     printf("\n****************************Testing insert_order!\n");
     list1 = insert_order(list1, "1989", "Taylor Swift");
     list1 = insert_order(list1, "Hey Jude", "The Beatles");
@@ -58,7 +61,8 @@ int main()
     list1 = insert_order(list1, "Tiny Dancer", "Elton John");
     list1 = insert_order(list1, "Hung Up", "Madonna");
     list1 = insert_order(list1, "Another Brick in the Wall", "Pink Floyd");
-    list1 = insert_order(list1, "Vogue", "Madonna");                                                                                        list1 = insert_front(list1, "You Belong With Me", "Taylor Swift");
+    list1 = insert_order(list1, "Vogue", "Madonna");
+    //list1 = insert_front(list1, "You Belong With Me", "Taylor Swift");
     list1 = insert_order(list1, "Work", "Rihanna");
     list1 = insert_order(list1, "Lose Yourself", "Eminem");
     list1 = insert_order(list1, "Stay", "Zedd");
@@ -81,6 +85,7 @@ int main()
     print_song(artist_search(list1, "Taylor Swift"));
     printf("artist_search(list1, \"Madonna\"): ");
     print_song(artist_search(list1, "Madonna"));
+
     printf("random_song(list1): ");
     print_song(random_song(list1));
     printf("random_song(list1): ");
