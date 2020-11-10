@@ -94,11 +94,15 @@ int main()
 
     printf("\n");
     printf("Testing library functions..\n");
-    struct song *library[27];
-    struct song *returnval;
 
-    returnval = add_node(library, "1989", "Taylor Swift");
-    //print_library(returnval);
+    struct library * lib = new_library();
+    char * alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    lib = add_node(lib, "1989", "Taylor Swift");
+    print_library(lib);
+
+    //lib = free_library(lib);
+    //print_library(lib);
 
     return 0;
 }

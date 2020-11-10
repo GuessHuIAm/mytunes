@@ -5,20 +5,34 @@
 #include "song_library.h"
 #include "song_list.h"
 
-struct song *add_node(struct song *library, char *name1, char *artist1)
-{
-    char s = artist1[0];
-    int letter;
-    if (s - 'A' >= 0 && s - 'Z' <= 0)
-    {
-        letter = s - 'A';
+struct library *new_library(){
+    struct library * lib = malloc(sizeof(struct library));
+    int i;
+    for(i = 0; i < 27; i++){
+        (lib->categories)[i] = NULL;
     }
-    else
-    {
-        letter = 26;
+    return lib;
+}
+
+struct library * add_node(struct library * lib, char *name1, char *artist1){
+    char s = artist1[0];
+    int i;
+
+    char alphabet[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    for (int i = 0; i < 27; i++){
+	if (s == alphabet[i]){
+		struct song * section = lib -> categories[i];
+		insert_order(section, name1, artist1);
+		return lib;
+	}
     }
 
+    insert_order(lib -> categories[26], name1, artist1);
+    return lib;
+
 }
+
 // Add song nodes and return a pointer to the array.
 
 /*
@@ -51,7 +65,7 @@ void entries_byletter(struct song *library[], char y)
 //Print out all the entries under a certain letter.
 */
 
-void print_library(struct song *library)
+void print_library(struct library * lib)
 {
     int i;
     char alphabet[27] = "abcdefghijklmnopqrstuvwxyz";
@@ -65,7 +79,8 @@ void print_library(struct song *library)
         {
             printf("%c: ", alphabet[i]);
         }
-        print_list((library[i]));
+        struct song * section = lib -> categories[i];
+        print_list(section);
         printf("\n");
     }
 }
