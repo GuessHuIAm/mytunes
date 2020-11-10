@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "song_list.h"
+#include "song_library.h"
 
 int main()
 {
@@ -90,6 +91,14 @@ int main()
     print_song(random_song(list1));
     printf("random_song(list1): ");
     print_song(random_song(list1));
+
+    printf("\n");
+    printf("Testing library functions..\n");
+    struct song *library[27];
+    struct song *returnval;
+
+    returnval = add_node(library, "1989", "Taylor Swift");
+    //print_library(returnval);
 
     return 0;
 }
