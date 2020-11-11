@@ -133,9 +133,28 @@ int main()
 
     printf("\n");
     printf("All songs associated with artists that start with the letter E:\n");
-    entries_byletter(lib, 'E');
+    entries_by_letter(lib, 'E');
 
+    printf("\nPrint out all of Taylor Swift's song:\n");
+    //entries_by_artist(lib, "Taylor Swift");
+    printf("\nPrint out all of Eminem's song:\n");
+    //entries_by_artist(lib, "Eminem");
+
+    printf("\nPrint out a series of 10 random songs:\n");
+    //shuffle(lib, 10);
+
+    printf("\n***************************The removing part of the library functions!\n");
+    printf("\nDeleting a few of Madonna's songs:\n");
+    printf("delete(lib, \"Hung Up\", \"Madonna\")\n");
+    //delete(lib, "Hung Up", "Madonna");
+    printf("delete(lib, \"Vogue\", \"Madonna\")\n");
+    //delete(lib, "Vogue", "Madonna");
+    printf("Here's what's left:\n");
+    //print_library(lib);
+
+    printf("\nClearing and freeing the library...\n");
     //lib = free_library(lib);
+    printf("Here's what's left when we print_library(lib)...\n");
     //print_library(lib);
 
     return 0;

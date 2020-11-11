@@ -61,7 +61,7 @@ struct song *artistsong_search(struct library *lib, char *artist1)
 
 //Search for an artist. Returns a pointer to a separate linked list with all entires of said artist.
 
-void entries_byletter(struct library *lib, char y)
+void entries_by_letter(struct library *lib, char y)
 {
     int letter = y - 'A';
     struct song *section = lib->categories[letter];
