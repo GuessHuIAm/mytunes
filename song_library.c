@@ -72,7 +72,7 @@ void entries_byletter(struct library *lib, char y)
 void print_library(struct library *lib)
 {
     int i;
-    char alphabet[27] = "abcdefghijklmnopqrstuvwxyz";
+    char alphabet[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for (i = 0; i < 27; i++)
     {
         if (i == 26)
@@ -81,7 +81,7 @@ void print_library(struct library *lib)
         }
         else
         {
-            printf("%c: ", alphabet[i]);
+            printf("-----%c-----\n", alphabet[i]);
         }
         struct song *section = lib->categories[i];
         print_list(section);

@@ -8,6 +8,7 @@
 int main()
 {
     srand(time(NULL));
+    printf("====================================\nLINKED LIST TESTS\n====================================\n");
     //testing insert_front
     printf("****************************Testing insert_front!\n");
     struct song *list1 = NULL;
@@ -92,8 +93,8 @@ int main()
     printf("random_song(list1): ");
     print_song(random_song(list1));
 
-    printf("\n");
-    printf("Testing library functions..\n");
+    printf("\n====================================\nMUSIC LIBRARY TESTS\n====================================\n");
+    printf("Testing add_node and print_library...\n");
 
     struct library *lib = new_library();
     char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -119,7 +120,7 @@ int main()
     print_library(lib);
 
     printf("\n");
-    printf("****************************Testing the searches for the library\n");
+    printf("****************************Testing the searches for the library!\n");
     printf("librarysong_search(lib, \"4 Minutes\", Madonna): ");
     print_song(librarysong_search(lib, "4 Minutes", "Madonna"));
     printf("librarysong_search(lib, \"Work\", Rihanna): ");
@@ -131,7 +132,7 @@ int main()
     print_song(artistsong_search(lib, "Elton John"));
 
     printf("\n");
-    printf("All songs associated with artists that start with the letter E\n");
+    printf("All songs associated with artists that start with the letter E:\n");
     entries_byletter(lib, 'E');
 
     //lib = free_library(lib);
