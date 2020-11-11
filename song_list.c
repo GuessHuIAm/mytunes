@@ -102,15 +102,15 @@ struct song *insert_order(struct song *old, char *name1, char *artist1)
 
 	while (p != NULL)
 	{
-		if (strcmp(p->artist, artist1) == 0)
+		if (strcmp(p->artist, artist1) == 0) //checks if the current node's artist is equal to the artist of the item we're inserting, then it goes through all the test cases
 		{
-			if (p->next == NULL && strcmp(p->name, name1) < 0)
+			if (p->next == NULL && strcmp(p->name, name1) < 0) //if you've reached the end of the linkedlist (p->next == NULL) and the item that we're inserting goes after the current node (p), then insert it after the current node.
 			{
 				p->next = nn;
 				p = old;
 				return p;
 			}
-			if (p->next == NULL && strcmp(p->name, name1) > 0)
+			if (p->next == NULL && strcmp(p->name, name1) > 0) //if you've reached the end of the linkedlist (p->next == NULL) and the item that we're inserting goes before the current node (p), then insert it before the current node. we do this by swapping the values of the current node and what we're inserting.
 			{
 				p->next = nn;
 				strcpy(nn->artist, p->artist);
@@ -120,33 +120,7 @@ struct song *insert_order(struct song *old, char *name1, char *artist1)
 				p = old;
 				return p;
 			}
-			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) > 0)
-			{
-				nn->next = p->next;
-				p->next = nn;
-				strcpy(nn->artist, p->artist);
-				strcpy(nn->name, p->name);
-				strcpy(p->artist, artist1);
-				strcpy(p->name, name1);
-				p = old;
-				return p;
-			}
-			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) < 0)
-			{
-				nn->next = p->next;
-				//fixed
-				p->next = nn;
-				p = old;
-				return p;
-			}
-			if (strcmp(p->name, name1) < 0 && strcmp(p->next->name, name1) > 0 && p->next != NULL)
-			{
-				nn->next = p->next;
-				p->next = nn;
-				p = old;
-				return p;
-			}
-			if (strcmp(p->name, name1) > 0)
+			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) > 0) //if the next node after the current node does not have the same artist then we just check to see if the item we're inserting goes before the current node. if it does, do the swap.
 			{
 				nn->next = p->next;
 				p->next = nn;
@@ -157,20 +131,35 @@ struct song *insert_order(struct song *old, char *name1, char *artist1)
 				p = old;
 				return p;
 			}
-			/*
-			if (strcmp(p->name, name1) < 0)
+			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) < 0) //if the next node after the current node does not have the same artist then we just check to see if the item we're inserting goes after the current node. if it does, insert it after the current node.
 			{
 				nn->next = p->next;
 				p->next = nn;
 				p = old;
 				return p;
 			}
-			*/
-
+			if (strcmp(p->name, name1) < 0 && strcmp(p->next->name, name1) > 0 && p->next != NULL) //at this point we know that the next node after the current node must have the same artist as what we're inserting so we check if we can insert our item in between the current node and the next node. if we can, insert it.
+			{
+				nn->next = p->next;
+				p->next = nn;
+				p = old;
+				return p;
+			}
+			if (strcmp(p->name, name1) > 0) //if we can't insert it in between the current and next node, then we see if our item goes before the current node and if it does, we do a swap.
+			{
+				nn->next = p->next;
+				p->next = nn;
+				strcpy(nn->artist, p->artist);
+				strcpy(nn->name, p->name);
+				strcpy(p->artist, artist1);
+				strcpy(p->name, name1);
+				p = old;
+				return p;
+			}
+			//if all this fails then we know that our item goes after the current node so we just move to the next node to make sure it goes in the right place.
 			p = p->next;
-			//return old;
 		}
-		if (strcmp(p->artist, artist1) > 0)
+		if (strcmp(p->artist, artist1) > 0) //if our item goes alphabetically before the current node, we swap
 		{
 			nn->next = p->next;
 			p->next = nn;
@@ -181,13 +170,13 @@ struct song *insert_order(struct song *old, char *name1, char *artist1)
 			p = old;
 			return p;
 		}
-		if (p->next == NULL && strcmp(p->artist, artist1) < 0)
+		if (p->next == NULL && strcmp(p->artist, artist1) < 0) //if we're at the end of the list, we insert it after.
 		{
 			p->next = nn;
 			p = old;
 			return p;
 		}
-		if (strcmp(p->artist, artist1) < 0 && strcmp(p->next->artist, artist1) > 0 && p->next != NULL)
+		if (strcmp(p->artist, artist1) < 0 && strcmp(p->next->artist, artist1) > 0 && p->next != NULL) // if we can insert our item between the current node and the next node, we insert it
 		{
 			nn->next = p->next;
 			p->next = nn;
