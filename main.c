@@ -104,11 +104,11 @@ int main()
     lib = add_node(lib, "Burning Love", "Elvis Presley");
     lib = add_node(lib, "The Monster", "Eminem");
     lib = add_node(lib, "Love Story", "Taylor Swift");
-    lib = add_node(lib, "La Isla Bonita", "Madonna");
+    //lib = add_node(lib, "La Isla Bonita", "Madonna");
     lib = add_node(lib, "Tiny Dancer", "Elton John");
-    lib = add_node(lib, "Hung Up", "Madonna");
+    //lib = add_node(lib, "Hung Up", "Madonna");
     lib = add_node(lib, "Another Brick in the Wall", "Pink Floyd");
-    lib = add_node(lib, "Vogue", "Madonna");
+    //lib = add_node(lib, "Vogue", "Madonna");
     lib = add_node(lib, "You Belong With Me", "Taylor Swift");
     lib = add_node(lib, "Work", "Rihanna");
     lib = add_node(lib, "Lose Yourself", "Eminem");
@@ -121,10 +121,10 @@ int main()
 
     printf("\n");
     printf("****************************Testing the searches for the library!\n");
-    printf("librarysong_search(lib, \"4 Minutes\", Madonna): ");
-    print_song(librarysong_search(lib, "4 Minutes", "Madonna"));
+    printf("librarysong_search(lib, \"Vogue\", Madonna): ");
+    //print_song(librarysong_search(lib, "Vogue", "Madonna"));
     printf("librarysong_search(lib, \"Work\", Rihanna): ");
-    print_song(librarysong_search(lib, "Work", "Rihanna"));
+    //print_song(librarysong_search(lib, "Work", "Rihanna"));
 
     printf("artistsong_search(lib, \"Zedd\"): ");
     print_song(artistsong_search(lib, "Zedd"));
@@ -136,26 +136,26 @@ int main()
     entries_by_letter(lib, 'E');
 
     printf("\nPrint out all of Taylor Swift's song:\n");
-    //entries_by_artist(lib, "Taylor Swift");
+    entries_by_artist(lib, "Taylor Swift");
     printf("\nPrint out all of Eminem's song:\n");
-    //entries_by_artist(lib, "Eminem");
+    entries_by_artist(lib, "Eminem");
 
     printf("\nPrint out a series of 10 random songs:\n");
-    //shuffle(lib, 10);
+    shuffle(lib, 10);
 
     printf("\n***************************The removing part of the library functions!\n");
-    printf("\nDeleting a few of Madonna's songs:\n");
-    printf("delete(lib, \"Hung Up\", \"Madonna\")\n");
-    //delete(lib, "Hung Up", "Madonna");
-    printf("delete(lib, \"Vogue\", \"Madonna\")\n");
-    //delete(lib, "Vogue", "Madonna");
+    printf("\nDeleting a few of Madonna's and Rihanna's songs:\n");
+    printf("library_delete(lib, \"Hung Up\", \"Madonna\")\n");
+    // lib = library_delete(lib, "Hung Up", "Madonna");
+    printf("library_delete(lib, \"Work\", \"Rihanna\")\n");
+    lib = library_delete(lib, "Work", "Rihanna");
     printf("Here's what's left:\n");
-    //print_library(lib);
+    print_library(lib);
 
     printf("\nClearing and freeing the library...\n");
-    //lib = free_library(lib);
+    lib = free_library(lib);
     printf("Here's what's left when we print_library(lib)...\n");
-    //print_library(lib);
+    print_library(lib);
 
     return 0;
 }
