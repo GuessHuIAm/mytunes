@@ -5,67 +5,71 @@
 #include "song_library.h"
 #include "song_list.h"
 
-struct library *new_library(){
-    struct library * lib = malloc(sizeof(struct library));
+struct library *new_library()
+{
+    struct library *lib = malloc(sizeof(struct library));
     int i;
-    for(i = 0; i < 27; i++){
+    for (i = 0; i < 27; i++)
+    {
         (lib->categories)[i] = NULL;
     }
     return lib;
 }
 
-struct library * add_node(struct library * lib, char *name1, char *artist1){
+struct library *add_node(struct library *lib, char *name1, char *artist1)
+{
     char s = artist1[0];
     int i;
 
     char alphabet[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    for (int i = 0; i < 27; i++){
-	if (s == alphabet[i]){
-		struct song * section = lib -> categories[i];
-		insert_order(section, name1, artist1);
-		return lib;
-	}
+    for (int i = 0; i < 27; i++)
+    {
+        if (s == alphabet[i])
+        {
+            struct song *section = (lib->categories[i]);
+            lib->categories[i] = insert_order(section, name1, artist1);
+            return lib;
+        }
     }
 
-    insert_order(lib -> categories[26], name1, artist1);
+    insert_order(lib->categories[26], name1, artist1);
     return lib;
-
 }
 
 // Add song nodes and return a pointer to the array.
 
-/*
-struct song *librarysong_search(struct song *library[], char *name1, char *artist1)
+struct song *librarysong_search(struct library *lib, char *name1, char *artist1)
 {
     char s = artist1[0];
     int letter = s - 'A';
-    struct song *returnval = song_search(library[letter], artist1, name1);
+    struct song *section = lib->categories[letter];
+    struct song *returnval = song_search(section, name1, artist1);
     return returnval;
 }
 
 //Search for a song given song and artist name (return a pointer).
 
-struct song *libraryartist_search(struct song *library[], char *artist1)
+struct song *artistsong_search(struct library *lib, char *artist1)
 {
     char s = artist1[0];
     int letter = s - 'A';
-    struct song *returnval = artist_search(library[letter], artist1);
+    struct song *section = lib->categories[letter];
+    struct song *returnval = artist_search(section, artist1);
     return returnval;
 }
 
 //Search for an artist. Returns a pointer to a separate linked list with all entires of said artist.
 
-void entries_byletter(struct song *library[], char y)
+void entries_byletter(struct library *lib, char y)
 {
     int letter = y - 'A';
-    struct song *x = library[letter];
-    print_list(x);
+    struct song *section = lib->categories[letter];
+    print_list(section);
 }
 //Print out all the entries under a certain letter.
-*/
 
-void print_library(struct library * lib)
+void print_library(struct library *lib)
 {
     int i;
     char alphabet[27] = "abcdefghijklmnopqrstuvwxyz";
@@ -79,7 +83,7 @@ void print_library(struct library * lib)
         {
             printf("%c: ", alphabet[i]);
         }
-        struct song * section = lib -> categories[i];
+        struct song *section = lib->categories[i];
         print_list(section);
         printf("\n");
     }

@@ -95,11 +95,44 @@ int main()
     printf("\n");
     printf("Testing library functions..\n");
 
-    struct library * lib = new_library();
-    char * alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    struct library *lib = new_library();
+    char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     lib = add_node(lib, "1989", "Taylor Swift");
+    lib = add_node(lib, "Hey Jude", "The Beatles");
+    lib = add_node(lib, "Burning Love", "Elvis Presley");
+    lib = add_node(lib, "The Monster", "Eminem");
+    lib = add_node(lib, "Love Story", "Taylor Swift");
+    lib = add_node(lib, "La Isla Bonita", "Madonna");
+    lib = add_node(lib, "Tiny Dancer", "Elton John");
+    lib = add_node(lib, "Hung Up", "Madonna");
+    lib = add_node(lib, "Another Brick in the Wall", "Pink Floyd");
+    lib = add_node(lib, "Vogue", "Madonna");
+    lib = add_node(lib, "You Belong With Me", "Taylor Swift");
+    lib = add_node(lib, "Work", "Rihanna");
+    lib = add_node(lib, "Lose Yourself", "Eminem");
+    lib = add_node(lib, "Stay", "Zedd");
+    lib = add_node(lib, "Circle of Life", "Elton John");
+    lib = add_node(lib, "4 Minutes", "Madonna");
+    lib = add_node(lib, "Clarity", "Zedd");
+
     print_library(lib);
+
+    printf("\n");
+    printf("****************************Testing the searches for the library\n");
+    printf("librarysong_search(lib, \"4 Minutes\", Madonna): ");
+    print_song(librarysong_search(lib, "4 Minutes", "Madonna"));
+    printf("librarysong_search(lib, \"Work\", Rihanna): ");
+    print_song(librarysong_search(lib, "Work", "Rihanna"));
+
+    printf("artistsong_search(lib, \"Zedd\"): ");
+    print_song(artistsong_search(lib, "Zedd"));
+    printf("artistsong_search(lib, \"Elton John\"): ");
+    print_song(artistsong_search(lib, "Elton John"));
+
+    printf("\n");
+    printf("All songs associated with artists that start with the letter E\n");
+    entries_byletter(lib, 'E');
 
     //lib = free_library(lib);
     //print_library(lib);
