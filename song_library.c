@@ -81,11 +81,11 @@ void print_library(struct library *lib)
     {
         if (i == 26)
         {
-            printf("Other Symbols: ");
+            printf("----- Other -----\n");
         }
         else
         {
-            printf("-----%c-----\n", alphabet[i]);
+            printf("------ %c ------\n", alphabet[i]);
         }
         struct song *section = lib->categories[i];
         print_list(section);
@@ -111,7 +111,7 @@ void entries_by_artist(struct library *lib, char* artist){
 void shuffle(struct library *lib, int number){
 	srand(time(NULL));
 	printf("Number of songs in total: %d\nNumber of songs in this shuffle: %d\n", lib->size, number);
-
+	printf("--------------------------------------------------------------\n");
 	if (lib->size == 0){
 		printf("No songs.\n");
 	}
@@ -132,15 +132,23 @@ void shuffle(struct library *lib, int number){
 	for (i = 0; i < number; i++){
 		print_song(library_array[rand() % (k - 1)]);
 	}
+	printf("--------------------------------------------------------------\n");
 
 	free(library_array);
 }
 
 struct library * library_delete(struct library *lib, char* name, char* artist){
 	lib->size--;
-	struct song * section = lib->categories[artist[0]-'A'];
-	section = remove_song(section, name);
-	return lib;
+	int num = artist[0] - 'A';
+	if (num < 26 && num > 0){
+		struct song * section = lib->categories[num];
+        	lib->categories[num] = remove_song(section, name);
+        	return lib;
+    	}
+    	else{
+        	lib->categories[26] = remove_song(lib->categories[26], name);
+		return lib;
+    	}
 }
 
 struct library * free_library(struct library * lib){
