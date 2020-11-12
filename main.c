@@ -116,6 +116,18 @@ int main()
     lib = add_node(lib, "Circle of Life", "Elton John");
     lib = add_node(lib, "4 Minutes", "Madonna");
     lib = add_node(lib, "Clarity", "Zedd");
+    lib = add_node(lib, "Blinding Lights", "The Weeknd");
+    lib = add_node(lib, "Rockstar", "DaBaby");
+    lib = add_node(lib, "Level of Concern", "Twenty One Pilots");
+    lib = add_node(lib, "Together", "Sia");
+    lib = add_node(lib, "Toosie Slide", "Drake");
+    lib = add_node(lib, "Hate The Other Side", "Juice WRLD");
+    lib = add_node(lib, "Wishing Well", "Juice WRLD");
+    lib = add_node(lib, "3am", "Halsey");
+    lib = add_node(lib, "The Box", "Roddy Rich");
+    lib = add_node(lib, "bloody valentine", "Machine Gun Kelly");
+    lib = add_node(lib, "positions", "Ariana Grande");
+    lib = add_node(lib, "Dynamite", "BTS");
 
     print_library(lib);
 
@@ -125,20 +137,30 @@ int main()
     print_song(librarysong_search(lib, "Vogue", "Madonna"));
     printf("librarysong_search(lib, \"Work\", Rihanna): ");
     print_song(librarysong_search(lib, "Work", "Rihanna"));
+    printf("librarysong_search(lib, \"Hate The Other Side\", Juice WRLD): ");
+    print_song(librarysong_search(lib, "Hate The Other Side", "Juice WRLD"));
 
     printf("artistsong_search(lib, \"Zedd\"): ");
     print_song(artistsong_search(lib, "Zedd"));
     printf("artistsong_search(lib, \"Elton John\"): ");
     print_song(artistsong_search(lib, "Elton John"));
+    printf("artistsong_search(lib, \"Juice WRLD\"): ");
+    print_song(artistsong_search(lib, "Juice WRLD"));
 
     printf("\n");
     printf("All songs associated with artists that start with the letter E:\n");
     entries_by_letter(lib, 'E');
 
+    printf("\n");
+    printf("All songs associated with artists that start with the letter D:\n");
+    entries_by_letter(lib, 'D');
+
     printf("\nPrint out all of Taylor Swift's song:\n");
     entries_by_artist(lib, "Taylor Swift");
     printf("\nPrint out all of Eminem's song:\n");
     entries_by_artist(lib, "Eminem");
+    printf("\nPrint out all of Juice WRLD's song:\n");
+    entries_by_artist(lib, "Juice WRLD");
 
     printf("\nPrint out a series of 10 random songs:\n");
     shuffle(lib, 10);
@@ -149,6 +171,8 @@ int main()
     lib = library_delete(lib, "Hung Up", "Madonna");
     printf("library_delete(lib, \"Work\", \"Rihanna\")\n");
     lib = library_delete(lib, "Work", "Rihanna");
+    printf("library_delete(lib, \"Dynamite\", \"BTS\")\n");
+    lib = library_delete(lib, "Dynamite", "BTS");
     printf("Here's what's left:\n");
     print_library(lib);
 
