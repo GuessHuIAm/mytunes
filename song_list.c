@@ -90,102 +90,45 @@ struct song *remove_song(struct song *front, char *name)
 }
 
 //insert a song in order, returns the beginning of the list
-struct song *insert_order(struct song *old, char *name1, char *artist1)
+struct song *insert_order(struct song *current, char *new_name, char *new_artist)
 {
-	struct song *nn = new_song(name1, artist1, NULL);
-	struct song *p = old;
+	struct song *nsong = new_song(new_name, new_artist, NULL);
+	struct song *copy = current;
 
-	if (old == NULL)
-	{
-		return nn;
-	}
+	// if this node is empty
+	if (current == NULL) return nsong;
 
-	while (p != NULL)
-	{
-		if (strcmp(p->artist, artist1) == 0) //checks if the current node's artist is equal to the artist of the item we're inserting, then it goes through all the test cases
-		{
-			if (p->next == NULL && strcmp(p->name, name1) < 0) //if you've reached the end of the linkedlist (p->next == NULL) and the item that we're inserting goes after the current node (p), then insert it after the current node.
-			{
-				p->next = nn;
-				p = old;
-				return p;
-			}
-			if (p->next == NULL && strcmp(p->name, name1) > 0) //if you've reached the end of the linkedlist (p->next == NULL) and the item that we're inserting goes before the current node (p), then insert it before the current node. we do this by swapping the values of the current node and what we're inserting.
-			{
-				p->next = nn;
-				strcpy(nn->artist, p->artist);
-				strcpy(nn->name, p->name);
-				strcpy(p->artist, artist1);
-				strcpy(p->name, name1);
-				p = old;
-				return p;
-			}
-			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) > 0) //if the next node after the current node does not have the same artist then we just check to see if the item we're inserting goes before the current node. if it does, do the swap.
-			{
-				nn->next = p->next;
-				p->next = nn;
-				strcpy(nn->artist, p->artist);
-				strcpy(nn->name, p->name);
-				strcpy(p->artist, artist1);
-				strcpy(p->name, name1);
-				p = old;
-				return p;
-			}
-			if (strcmp(p->next->artist, artist1) != 0 && strcmp(p->name, name1) < 0) //if the next node after the current node does not have the same artist then we just check to see if the item we're inserting goes after the current node. if it does, insert it after the current node.
-			{
-				nn->next = p->next;
-				p->next = nn;
-				p = old;
-				return p;
-			}
-			if (strcmp(p->name, name1) < 0 && strcmp(p->next->name, name1) > 0 && p->next != NULL) //at this point we know that the next node after the current node must have the same artist as what we're inserting so we check if we can insert our item in between the current node and the next node. if we can, insert it.
-			{
-				nn->next = p->next;
-				p->next = nn;
-				p = old;
-				return p;
-			}
-			if (strcmp(p->name, name1) > 0) //if we can't insert it in between the current and next node, then we see if our item goes before the current node and if it does, we do a swap.
-			{
-				nn->next = p->next;
-				p->next = nn;
-				strcpy(nn->artist, p->artist);
-				strcpy(nn->name, p->name);
-				strcpy(p->artist, artist1);
-				strcpy(p->name, name1);
-				p = old;
-				return p;
-			}
-			//if all this fails then we know that our item goes after the current node so we just move to the next node to make sure it goes in the right place.
-			p = p->next;
-		}
-		if (strcmp(p->artist, artist1) > 0) //if our item goes alphabetically before the current node, we swap
-		{
-			nn->next = p->next;
-			p->next = nn;
-			strcpy(nn->artist, p->artist);
-			strcpy(nn->name, p->name);
-			strcpy(p->artist, artist1);
-			strcpy(p->name, name1);
-			p = old;
-			return p;
-		}
-		if (p->next == NULL && strcmp(p->artist, artist1) < 0) //if we're at the end of the list, we insert it after.
-		{
-			p->next = nn;
-			p = old;
-			return p;
-		}
-		if (strcmp(p->artist, artist1) < 0 && strcmp(p->next->artist, artist1) > 0 && p->next != NULL) // if we can insert our item between the current node and the next node, we insert it
-		{
-			nn->next = p->next;
-			p->next = nn;
-			p = old;
-			return p;
-		}
+	// if the new node is before this node (either by artist or by song)
+	if ( (strcmp(new_artist, current->artist) < 0) ||
+	     ((!strcmp(new_artist, current->artist)) && (strcmp(new_name, current -> name) < 0)) ){
+        	nsong->next = current;
+        	return nsong;
+    	}
 
-		p = p->next;
-	}
+	// a loopy kinda thing where we find where this node belongs
+    	struct song *last_song = current;
+   	current = current->next;
+
+	while (current != NULL){
+		// if the new song's artist comes before the current song's artist
+        	if (strcmp(new_artist, current->artist) < 0){
+            		nsong->next = current; // new song points to the current song
+            		last_song->next = nsong; // and the last song points to where the new song
+            		return(copy);
+        	}
+		// same thing happens if the current song and the new song have the same artist, but the new song still precede
+        	if ((!strcmp(new_artist, current->artist)) && (strcmp(new_name, current->name) < 0)){
+                	nsong->next = current;
+                	last_song->next = nsong;
+                	return(copy);
+            	}
+        	last_song = current; // swapping for another round of comparisons in this while loop
+        	current = current->next;
+    	}
+
+	// if we get to the end and is still yet to find a place, that means this new song belongs at the end
+	last_song->next = nsong; // last_song pointed to a NULL in the last iteration of the while loop
+	return copy;
 }
 
 //return a pointer based on artist and song name
